@@ -1,11 +1,15 @@
 package controlador;
 
 import dto.CiudadDTO;
+import dto.UnidadDTO;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfCiudadSvc;
+import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfUnidadSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.CiudadSvc;
+import org.datacontract.schemas._2004._07.sge_service_contracts.UnidadSvc;
 import org.tempuri.BusService;
 import org.tempuri.IBusService;
 import org.tempuri.IBusServiceObtenerCiudadesBusServiceFaultFaultFaultMessage;
+import org.tempuri.IBusServiceObtenerUnidadesBusServiceFaultFaultFaultMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,5 +55,37 @@ public class CrearSalidaControlador {
         }
 
         return CiudadDTOList;
+    }
+
+    /**
+     * Secuencia: Elegir Ciudad
+     *
+     * @param codigoDeCiudad
+     * @return
+     * @throws IBusServiceObtenerUnidadesBusServiceFaultFaultFaultMessage
+     */
+    public List<UnidadDTO> getUnidades(int codigoDeCiudad) throws IBusServiceObtenerUnidadesBusServiceFaultFaultFaultMessage {
+
+        BusService client = new BusService();
+        IBusService stub = client.getSGEBusService();
+
+        ArrayOfUnidadSvc array = stub.obtenerUnidades(CODIGO, codigoDeCiudad);
+        List<UnidadSvc> unidades = array.getUnidadSvc();
+
+        List<UnidadDTO> list = new ArrayList<>();
+        UnidadDTO unidadDTO;
+
+        for (UnidadSvc unidad : unidades) {
+            unidadDTO = new UnidadDTO();
+
+            unidadDTO.setNumero(unidad.getNumero());
+            unidadDTO.setDominio(unidad.getDominio().getValue());
+            unidadDTO.setMarca(unidad.getMarca().getValue());
+            unidadDTO.setTipo(unidad.getTipo().getValue());
+            unidadDTO.setCantidadButacas(unidad.getCantidadButacas());
+
+            list.add(unidadDTO);
+        }
+        return list;
     }
 }

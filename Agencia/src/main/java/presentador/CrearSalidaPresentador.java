@@ -2,8 +2,10 @@ package presentador;
 
 import controlador.CrearSalidaControlador;
 import dto.CiudadDTO;
+import dto.UnidadDTO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import org.tempuri.IBusServiceObtenerCiudadesBusServiceFaultFaultFaultMessage;
 import vista.CrearSalidaStage;
 
 import java.util.List;
@@ -24,21 +26,34 @@ public class CrearSalidaPresentador {
             this.stage.show();
 
         } catch (Exception e) {
-            this.alertaCiudades();
+            this.alertaMaker(Alert.AlertType.ERROR, "Error", "Hubo un problema", "No se pudieron encontrar los destinos");
+            e.printStackTrace();
         }
     }
 
     private void setActions() {
-
+        this.stage.getCiudadChoiceBox().setOnAction(event -> choiceBoxSelectionChange());
     }
 
-    private void alertaCiudades() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Advertencia");
-        alert.setHeaderText("No se pudo encontrar los destinos disponibles");
-        alert.setContentText("Momentaneamente no se puedieron encontrar los " +
-                "destinos disponibles, por favor intente de nuevo mas tarde" +
-                "o verifique su conexion a Internet.");
+    private void choiceBoxSelectionChange() {
+        ObservableList<UnidadDTO> unidades = FXCollections.observableArrayList();
+        int codigoDeCiudad = this.stage.getCiudadChoiceBox().getSelectionModel().getSelectedItem().getCodigo();
+
+        try {
+            unidades.addAll(CrearSalidaControlador.getInstance().getUnidades(codigoDeCiudad));
+        } catch (Exception e) {
+            this.alertaMaker(Alert.AlertType.WARNING, "Advertencia", "Hubo un problema", "No se pudieron encontrar las unidades para el destino");
+            e.printStackTrace();
+        }
+
+        this.stage.getUnidadesListView().setItems(unidades);
+    }
+
+    private void alertaMaker(Alert.AlertType error, String advertencia, String headerText, String contentText) {
+        Alert alert = new Alert(error);
+        alert.setTitle(advertencia);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
 
         alert.showAndWait();
     }
