@@ -26,6 +26,6 @@ public class MenuPrincipalPresentador {
 
     private void itemCrearSalida_Click() {
         System.out.println("Crear salida");
-        new CrearSalidaPresentador(200,200);
+        new CrearSalidaPresentador(500,550);
     }
 }
