@@ -2,6 +2,7 @@ package presentador;
 
 import controlador.CrearSalidaControlador;
 import dto.CiudadDTO;
+import dto.HotelDTO;
 import dto.UnidadDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,16 +38,19 @@ public class CrearSalidaPresentador {
 
     private void choiceBoxSelectionChange() {
         ObservableList<UnidadDTO> unidades = FXCollections.observableArrayList();
+        ObservableList<HotelDTO> hoteles = FXCollections.observableArrayList();
         int codigoDeCiudad = this.stage.getCiudadChoiceBox().getSelectionModel().getSelectedItem().getCodigo();
 
         try {
             unidades.addAll(CrearSalidaControlador.getInstance().getUnidades(codigoDeCiudad));
+            hoteles.addAll(CrearSalidaControlador.getInstance().getHoteles(codigoDeCiudad));
         } catch (Exception e) {
             this.alertaMaker(Alert.AlertType.WARNING, "Advertencia", "Hubo un problema", "No se pudieron encontrar las unidades para el destino");
             e.printStackTrace();
         }
 
         this.stage.getUnidadesListView().setItems(unidades);
+        this.stage.getHotelChoiceBox().setItems(hoteles);
     }
 
     private void alertaMaker(Alert.AlertType error, String advertencia, String headerText, String contentText) {

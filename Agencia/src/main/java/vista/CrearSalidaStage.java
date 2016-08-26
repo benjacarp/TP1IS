@@ -1,6 +1,7 @@
 package vista;
 
 import dto.CiudadDTO;
+import dto.HotelDTO;
 import dto.UnidadDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,7 @@ public class CrearSalidaStage extends Stage {
 
     private ChoiceBox<CiudadDTO> ciudadChoiceBox;
     private ListView<UnidadDTO> unidadesListView;
+    private ChoiceBox<HotelDTO> hotelChoiceBox;
 
     public CrearSalidaStage(int largo, int ancho, List<CiudadDTO> ciudades) {
         this.setTitle(WINDOWS_TITLE);
@@ -32,6 +34,7 @@ public class CrearSalidaStage extends Stage {
     private void initComponents(List<CiudadDTO> ciudades) {
 
         this.ciudadChoiceBox = new ChoiceBox<>();
+        this.hotelChoiceBox = new ChoiceBox<>();
         this.ciudadChoiceBox.getItems().addAll(ciudades);
         this.unidadesListView = new ListView<>();
 
@@ -43,7 +46,8 @@ public class CrearSalidaStage extends Stage {
         pane.getChildren().add(this.ciudadChoiceBox);
         pane.getChildren().add(new Label("Unidades"));
         pane.getChildren().add(this.unidadesListView);
-        pane.getChildren().add(new Label("Unidades"));
+        pane.getChildren().add(new Label("Hoteles"));
+        pane.getChildren().add(this.hotelChoiceBox);
         Scene scene = new Scene(pane,largo,ancho);
 
         //set the scene to the stage
@@ -56,5 +60,9 @@ public class CrearSalidaStage extends Stage {
 
     public ListView<UnidadDTO> getUnidadesListView() {
         return unidadesListView;
+    }
+
+    public ChoiceBox<HotelDTO> getHotelChoiceBox() {
+        return hotelChoiceBox;
     }
 }

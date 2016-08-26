@@ -1,6 +1,7 @@
 package controlador;
 
 import dto.CiudadDTO;
+import dto.HotelDTO;
 import dto.UnidadDTO;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfCiudadSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfUnidadSvc;
@@ -85,6 +86,46 @@ public class CrearSalidaControlador {
             unidadDTO.setCantidadButacas(unidad.getCantidadButacas());
 
             list.add(unidadDTO);
+        }
+        return list;
+    }
+
+    /**
+     * Secuencia: Elegir Ciudad
+     *
+     * hoteles hardcodeados
+     *
+     * @param codigoDeCiudad
+     * @return
+     */
+    public List<HotelDTO> getHoteles(int codigoDeCiudad) {
+        List<HotelDTO> list = new ArrayList<>();
+
+        if (codigoDeCiudad == 1) {
+            list.add(new HotelDTO(3,"Zeus"));
+            list.add(new HotelDTO(5,"Prive"));
+            list.add(new HotelDTO(4,"Amadeus"));
+
+        } else if (codigoDeCiudad == 2) {
+            list.add(new HotelDTO(3,"abc"));
+            list.add(new HotelDTO(5,"def"));
+            list.add(new HotelDTO(4,"ghi"));
+
+        } else if (codigoDeCiudad == 3) {
+            list.add(new HotelDTO(3,"jkl"));
+            list.add(new HotelDTO(5,"mno"));
+            list.add(new HotelDTO(4,"pqr"));
+
+        } else if (codigoDeCiudad == 4) {
+            list.add(new HotelDTO(3,"stu"));
+            list.add(new HotelDTO(5,"vw"));
+            list.add(new HotelDTO(4,"xyz"));
+
+        } else {
+            list.add(new HotelDTO(3,"hotel 1"));
+            list.add(new HotelDTO(5,"hotel 2"));
+            list.add(new HotelDTO(4,"hotel 3"));
+
         }
         return list;
     }
