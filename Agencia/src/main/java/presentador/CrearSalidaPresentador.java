@@ -40,10 +40,11 @@ public class CrearSalidaPresentador {
         ObservableList<UnidadDTO> unidades = FXCollections.observableArrayList();
         ObservableList<HotelDTO> hoteles = FXCollections.observableArrayList();
         int codigoDeCiudad = this.stage.getCiudadChoiceBox().getSelectionModel().getSelectedItem().getCodigo();
+        String nombreDeCiudad = this.stage.getCiudadChoiceBox().getSelectionModel().getSelectedItem().getNombre();
 
         try {
             unidades.addAll(CrearSalidaControlador.getInstance().getUnidades(codigoDeCiudad));
-            hoteles.addAll(CrearSalidaControlador.getInstance().getHoteles(codigoDeCiudad));
+            hoteles.addAll(CrearSalidaControlador.getInstance().getHoteles(nombreDeCiudad));
         } catch (Exception e) {
             this.alertaMaker(Alert.AlertType.WARNING, "Advertencia", "Hubo un problema", "No se pudieron encontrar las unidades para el destino");
             e.printStackTrace();

@@ -34,6 +34,8 @@ public class CrearSalidaStage extends Stage {
     private TextField campoNombre;
     private TextArea areaCondiciones;
     private Button confirmarButton;
+    private DatePicker fechaInicio;
+    private DatePicker fechaFin;
 
     public CrearSalidaStage(int largo, int ancho, List<CiudadDTO> ciudades) {
         this.setTitle(WINDOWS_TITLE);
@@ -42,6 +44,9 @@ public class CrearSalidaStage extends Stage {
     }
 
     private void initComponents(List<CiudadDTO> ciudades) {
+
+        this.fechaInicio = new DatePicker();
+        this.fechaFin = new DatePicker();
 
         this.ciudadChoiceBox = new ChoiceBox<>();
         this.hotelChoiceBox = new ChoiceBox<>();
@@ -63,6 +68,9 @@ public class CrearSalidaStage extends Stage {
 
     private void buildStage(int largo, int ancho) {
         VBox pane = new VBox();
+        pane.getChildren().add(new Label("Fechas"));
+        pane.getChildren().add(createHBox(new Label("inicio: "), this.fechaInicio));
+        pane.getChildren().add(createHBox(new Label("fin:     "), this.fechaFin));
         pane.getChildren().add(new Label("Destinos"));
         pane.getChildren().add(this.ciudadChoiceBox);
         pane.getChildren().add(new Label("Unidades"));

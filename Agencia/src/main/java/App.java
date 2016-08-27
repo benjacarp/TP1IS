@@ -1,3 +1,4 @@
+import datos.Repositorio;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import presentador.MenuPrincipalPresentador;
@@ -10,6 +11,8 @@ public class App extends Application{
 
     public static void main(String[] args) {
         System.out.println("TP1 Ingeniería del soft");
+        System.out.println("Inicializando repositorio de datos");
+        Repositorio.getInstance().cargarDatos();
         launch(args);
     }
 
