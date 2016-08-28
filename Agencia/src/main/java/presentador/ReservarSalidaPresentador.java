@@ -1,5 +1,6 @@
 package presentador;
 
+import com.microsoft.schemas._2003._10.serialization.arrays.ArrayOfint;
 import controlador.ReservarSalidaControlador;
 import dto.SalidaDTO;
 import dto.SalidaInfoDTO;
@@ -7,6 +8,7 @@ import javafx.scene.control.Alert;
 import org.tempuri.IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage;
 import vista.ReservarSalidaStage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public class ReservarSalidaPresentador extends GenericPresentador{
 
     private ReservarSalidaStage stage;
     private SalidaInfoDTO salidaInfoDTO;
+    private List<Integer> butacas = new ArrayList<>();
 
     public ReservarSalidaPresentador(int largo, int ancho) {
 
@@ -32,11 +35,15 @@ public class ReservarSalidaPresentador extends GenericPresentador{
 
     private void setActions() {
         this.stage.getChoiceBoxSalidas().setOnAction(event -> choiceBoxSalidasSelectionChange());
-        this.stage.getChoiceBoxBase().setOnAction(event -> choiceBoxBaseSelectionChange());
+        this.stage.getButtonActualizar().setOnAction(event -> choiceBoxSalidasSelectionChange());
+
+//        int base = this.stage.getChoiceBoxBase().getSelectionModel().getSelectedItem();
+        this.stage.getChoiceBoxBase().setOnAction(event -> choiceBoxBaseSelectionChange(this.stage.getChoiceBoxBase().getSelectionModel().getSelectedItem()));
+        this.stage.getButtonElegirButacas().setOnAction(event -> buttonElegirButacasClick(this.stage.getChoiceBoxBase().getSelectionModel().getSelectedItem()));
+        this.stage.getButtonConfirmarReserva().setOnAction(event -> buttonConfirmarReservaClick());
     }
 
-    private void choiceBoxBaseSelectionChange() {
-        int base = this.stage.getChoiceBoxBase().getSelectionModel().getSelectedItem();
+    private void choiceBoxBaseSelectionChange(int base) {
         double total = ReservarSalidaControlador.getInstance().calcularTotal(base);
         this.stage.getLabelPrecioTotal().setText(String.valueOf(total));
     }
@@ -68,4 +75,29 @@ public class ReservarSalidaPresentador extends GenericPresentador{
         return string;
     }
 
+    private void buttonElegirButacasClick(int base) {
+        new ElegirButacasPresentador(base,300,400, this);
+    }
+
+    public void setButacas(List<Integer> butacas) {
+        this.butacas = butacas;
+    }
+
+    public List<Integer> getButacas() {
+        return butacas;
+    }
+
+    private void buttonConfirmarReservaClick() {
+        for (int i : this.butacas) {
+            System.out.println(i);
+        }
+    }
+
+    public void actualizarButacas() {
+        String butacas = "Butacas a reservar: ";
+        for (int i : this.butacas) {
+            butacas = butacas + i + "   ";
+        }
+        this.stage.getButacasElegidas().setText(butacas);
+    }
 }

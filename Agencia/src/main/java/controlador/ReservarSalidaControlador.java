@@ -94,4 +94,28 @@ public class ReservarSalidaControlador extends GenericControlador {
         }
         return total;
     }
+
+    public String getButacasDisponibles() throws IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage {
+
+        String butacasMessage = "";
+        int unidad = this.salida.getTransporte().getUnidad().getNumero();
+
+        /*BusService client = new BusService();
+        IBusService stub = client.getSGEBusService();
+
+        ArrayOfButacaSvc array = stub.obtenerButacas(CODIGO, unidad);
+        List<ButacaSvc> butacas = array.getButacaSvc();*/
+
+        for (ButacaSvc butacaSvc : this.butacas) {
+            if (!butacaSvc.isOcupada()) {
+                if (butacaSvc.getNumero() < 10) {
+                    butacasMessage = butacasMessage + "0" + butacaSvc.getNumero() + "     ";
+                } else {
+                    butacasMessage = butacasMessage + butacaSvc.getNumero() + "     ";
+                }
+            }
+        }
+
+        return butacasMessage;
+    }
 }
