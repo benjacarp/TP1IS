@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +10,9 @@ public class Salida {
 
     private int id;
     private String estado;  //hacer enum despues
+
+    // paquetes contratados para esta salida
+    private List<Paquete> paquetes = new ArrayList<>();
 
     //datos
     private String nombre;
@@ -144,6 +147,10 @@ public class Salida {
 
     public void setBaseQuintuple(double baseQuintuple) {
         this.baseQuintuple = baseQuintuple;
+    }
+
+    public List<Paquete> getPaquetes() {
+        return paquetes;
     }
 
     @Override

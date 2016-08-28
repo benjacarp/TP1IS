@@ -1,11 +1,6 @@
 package datos;
 
-import model.Alojamiento;
-import model.Ciudad;
-import model.Hotel;
-import model.Salida;
-import model.Transporte;
-import model.Unidad;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +58,11 @@ public class Repositorio {
         salida1.setBaseTriple(3500);
         salida1.setBaseCuadruple(3000);
         salida1.setBaseQuintuple(2800);
+
+        List<Integer> list = new ArrayList<>();
+        list.add(5);
+        list.add(6);
+        salida1.getPaquetes().add(new Paquete("Juan Pedro Sosa",list,2,8000));
 
         this.salidas.add(salida1);
 

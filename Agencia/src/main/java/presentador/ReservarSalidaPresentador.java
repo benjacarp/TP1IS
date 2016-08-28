@@ -1,11 +1,12 @@
 package presentador;
 
-import com.microsoft.schemas._2003._10.serialization.arrays.ArrayOfint;
 import controlador.ReservarSalidaControlador;
+import dto.ReservaDTO;
 import dto.SalidaDTO;
 import dto.SalidaInfoDTO;
 import javafx.scene.control.Alert;
 import org.tempuri.IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage;
+import org.tempuri.IBusServiceReservarButacasBusServiceFaultFaultFaultMessage;
 import vista.ReservarSalidaStage;
 
 import java.util.ArrayList;
@@ -88,8 +89,16 @@ public class ReservarSalidaPresentador extends GenericPresentador{
     }
 
     private void buttonConfirmarReservaClick() {
-        for (int i : this.butacas) {
-            System.out.println(i);
+        try {
+            ReservaDTO reservaDTO = ReservarSalidaControlador.getInstance().ReservarSalida(this.stage.getCampoCliente().getText(),this.butacas);
+            if (reservaDTO.isExito()) {
+                this.alertaMaker(Alert.AlertType.INFORMATION, "Reserva exitosa", "Se reservaron las butacas exitosamente", "El paquete se reservo exitosamente");
+            } else {
+                this.alertaMaker(Alert.AlertType.ERROR, "Atención", "No se pudo reservar las butacas", "Algunas de las butacas ya fueron reservadas, seleccione actualizar y reelija los asientos");
+            }
+        } catch (IBusServiceReservarButacasBusServiceFaultFaultFaultMessage e) {
+            e.printStackTrace();
+            this.alertaMaker(Alert.AlertType.ERROR, "Error", "Error de conexion", "No se pudo reservar las butacas para la salida.");
         }
     }
 

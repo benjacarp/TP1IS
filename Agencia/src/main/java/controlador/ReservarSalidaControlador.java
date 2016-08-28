@@ -1,14 +1,19 @@
 package controlador;
 
+import com.microsoft.schemas._2003._10.serialization.arrays.ArrayOfint;
 import datos.Repositorio;
+import dto.ReservaDTO;
 import dto.SalidaDTO;
 import dto.SalidaInfoDTO;
+import model.Paquete;
 import model.Salida;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfButacaSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ButacaSvc;
+import org.datacontract.schemas._2004._07.sge_service_contracts.Resultado;
 import org.tempuri.BusService;
 import org.tempuri.IBusService;
 import org.tempuri.IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage;
+import org.tempuri.IBusServiceReservarButacasBusServiceFaultFaultFaultMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,8 @@ public class ReservarSalidaControlador extends GenericControlador {
     private static final ReservarSalidaControlador INSTANCE = new ReservarSalidaControlador();
     private List<ButacaSvc> butacas;
     private Salida salida;
+    private double precio;
+    private int base;
 
     private ReservarSalidaControlador() {
     }
@@ -80,19 +87,20 @@ public class ReservarSalidaControlador extends GenericControlador {
     }
 
     public double calcularTotal(int base) {
-        double total = 0;
+        this.precio = 0;
+        this.base = base;
         if (base == 1) {
-            total = this.salida.getBaseSimple();
+            this.precio = this.salida.getBaseSimple();
         } else if (base == 2) {
-            total = this.salida.getBaseDoble() * 2;
+            this.precio = this.salida.getBaseDoble() * 2;
         } else if (base == 3) {
-            total = this.salida.getBaseTriple() * 3;
+            this.precio = this.salida.getBaseTriple() * 3;
         } else if (base == 4) {
-            total = this.salida.getBaseCuadruple() * 4;
+            this.precio = this.salida.getBaseCuadruple() * 4;
         } else if (base == 5) {
-            total = this.salida.getBaseQuintuple() * 5;
+            this.precio = this.salida.getBaseQuintuple() * 5;
         }
-        return total;
+        return this.precio;
     }
 
     public String getButacasDisponibles() throws IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage {
@@ -117,5 +125,37 @@ public class ReservarSalidaControlador extends GenericControlador {
         }
 
         return butacasMessage;
+    }
+
+    public ReservaDTO ReservarSalida(String cliente, List<Integer> butacas) throws IBusServiceReservarButacasBusServiceFaultFaultFaultMessage {
+        //armar el array con el formato de la API
+        ArrayOfint arrayOfint = new ArrayOfint();
+        for (int butaca : butacas) {
+            arrayOfint.getInt().add(butaca);
+        }
+
+        BusService client = new BusService();
+        IBusService stub = client.getSGEBusService();
+
+        Resultado resultado = stub.reservarButacas(CODIGO, this.salida.getTransporte().getUnidad().getNumero(), arrayOfint);
+
+        ReservaDTO reservaDTO;
+        if (resultado.isCorrecto()) {
+            reservaDTO = new ReservaDTO(true, "La operación de reserva fue exitosa");
+            this.guardarPaquete(cliente, butacas);
+        } else {
+            reservaDTO = new ReservaDTO(false, resultado.getError().getValue());
+        }
+        return reservaDTO;
+    }
+
+    private void guardarPaquete(String cliente, List<Integer> butacas) {
+
+        Paquete p = new Paquete(cliente, butacas, this.base, this.precio);
+        this.salida.getPaquetes().add(p);
+
+        System.out.println(p);
+        Repositorio.getInstance().getSalidas().add(this.salida);
+
     }
 }

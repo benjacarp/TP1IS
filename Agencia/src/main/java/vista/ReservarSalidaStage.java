@@ -2,10 +2,7 @@ package vista;
 
 import dto.SalidaDTO;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,6 +24,7 @@ public class ReservarSalidaStage extends Stage {
     private Label butacasElegidas;
     private Button buttonConfirmarReserva;
     private Button buttonActualizar;
+    private TextField campoCliente;
 
     public ReservarSalidaStage(int largo, int ancho, List<SalidaDTO> salidas) {
         this.setTitle(WINDOWS_TITLE);
@@ -36,6 +34,7 @@ public class ReservarSalidaStage extends Stage {
 
     private void initComponents(List<SalidaDTO> salidas) {
 
+        this.campoCliente = new TextField();
         this.choiceBoxSalidas = new ChoiceBox<SalidaDTO>();
         this.choiceBoxSalidas.getItems().addAll(salidas);
         this.buttonActualizar = new Button("Actualizar");
@@ -53,6 +52,8 @@ public class ReservarSalidaStage extends Stage {
 
         VBox pane = new VBox();
         pane.getChildren().add(new Label("Elija la salida que desea reservar: "));
+        pane.getChildren().add(new Label("Cliente: "));
+        pane.getChildren().add(this.campoCliente);
         HBox hBox = new HBox();
         hBox.getChildren().addAll(this.choiceBoxSalidas, this.buttonActualizar);
         pane.getChildren().add(hBox);
@@ -114,5 +115,9 @@ public class ReservarSalidaStage extends Stage {
 
     public void setButtonActualizar(Button buttonActualizar) {
         this.buttonActualizar = buttonActualizar;
+    }
+
+    public TextField getCampoCliente() {
+        return campoCliente;
     }
 }
