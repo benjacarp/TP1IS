@@ -22,6 +22,8 @@ public class ReservarSalidaStage extends Stage {
     private ChoiceBox<SalidaDTO> choiceBoxSalidas;
     private Label labelcupos;
     private Label labelPrecios;
+    private Label labelPrecioTotal;
+    private ChoiceBox<Integer> choiceBoxBase;
 
     public ReservarSalidaStage(int largo, int ancho, List<SalidaDTO> salidas) {
         this.setTitle(WINDOWS_TITLE);
@@ -35,7 +37,9 @@ public class ReservarSalidaStage extends Stage {
         this.choiceBoxSalidas.getItems().addAll(salidas);
         this.labelcupos = new Label();
         this.labelPrecios = new Label();
-
+        this.choiceBoxBase = new ChoiceBox<Integer>();
+        this.choiceBoxBase.getItems().addAll(1,2,3,4,5);
+        this.labelPrecioTotal = new Label("");
     }
 
     private void buildStage(int largo, int ancho) {
@@ -48,6 +52,11 @@ public class ReservarSalidaStage extends Stage {
         hBox.getChildren().addAll(new Label("Cupos disponibles: "), this.labelcupos);
         pane.getChildren().add(hBox);
         pane.getChildren().add(this.labelPrecios);
+
+        pane.getChildren().add(new Label(""));
+        hBox = new HBox();
+        hBox.getChildren().addAll(new Label("Cupos disponibles: "), this.choiceBoxBase, new Label("Precio Total: $"),this.labelPrecioTotal);
+        pane.getChildren().add(hBox);
 
         Scene scene = new Scene(pane,largo,ancho);
         //set the scene to the stage
@@ -64,5 +73,13 @@ public class ReservarSalidaStage extends Stage {
 
     public Label getLabelPrecios() {
         return labelPrecios;
+    }
+
+    public Label getLabelPrecioTotal() {
+        return labelPrecioTotal;
+    }
+
+    public ChoiceBox<Integer> getChoiceBoxBase() {
+        return choiceBoxBase;
     }
 }

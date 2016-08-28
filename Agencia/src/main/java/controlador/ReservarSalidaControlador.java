@@ -19,6 +19,8 @@ import java.util.List;
 public class ReservarSalidaControlador extends GenericControlador {
 
     private static final ReservarSalidaControlador INSTANCE = new ReservarSalidaControlador();
+    private List<ButacaSvc> butacas;
+    private Salida salida;
 
     private ReservarSalidaControlador() {
     }
@@ -51,7 +53,8 @@ public class ReservarSalidaControlador extends GenericControlador {
         ArrayOfButacaSvc arrayOfButacaSvcutacas = stub.obtenerButacas(CODIGO, salida.getTransporte().getUnidad().getNumero());
 
         int cupo = 0;
-        for (ButacaSvc butacaSvc : arrayOfButacaSvcutacas.getButacaSvc()) {
+        this.butacas = arrayOfButacaSvcutacas.getButacaSvc();
+        for (ButacaSvc butacaSvc : this.butacas) {
             if (!butacaSvc.isOcupada()) {
                 cupo++;
             }
@@ -64,7 +67,7 @@ public class ReservarSalidaControlador extends GenericControlador {
     }
 
     public SalidaInfoDTO getSalidaInfo(int salidaId) {
-        Salida salida = Repositorio.getInstance().getSalidaPorId(salidaId);
+        this.salida = Repositorio.getInstance().getSalidaPorId(salidaId);
 
         SalidaInfoDTO salidaInfoDTO = new SalidaInfoDTO();
         salidaInfoDTO.setBaseSimple(salida.getBaseSimple());
@@ -74,5 +77,21 @@ public class ReservarSalidaControlador extends GenericControlador {
         salidaInfoDTO.setBaseQuintuple(salida.getBaseQuintuple());
 
         return salidaInfoDTO;
+    }
+
+    public double calcularTotal(int base) {
+        double total = 0;
+        if (base == 1) {
+            total = this.salida.getBaseSimple();
+        } else if (base == 2) {
+            total = this.salida.getBaseDoble() * 2;
+        } else if (base == 3) {
+            total = this.salida.getBaseTriple() * 3;
+        } else if (base == 4) {
+            total = this.salida.getBaseCuadruple() * 4;
+        } else if (base == 5) {
+            total = this.salida.getBaseQuintuple() * 5;
+        }
+        return total;
     }
 }

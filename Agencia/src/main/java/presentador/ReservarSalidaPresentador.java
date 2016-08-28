@@ -15,6 +15,7 @@ import java.util.List;
 public class ReservarSalidaPresentador extends GenericPresentador{
 
     private ReservarSalidaStage stage;
+    private SalidaInfoDTO salidaInfoDTO;
 
     public ReservarSalidaPresentador(int largo, int ancho) {
 
@@ -31,11 +32,18 @@ public class ReservarSalidaPresentador extends GenericPresentador{
 
     private void setActions() {
         this.stage.getChoiceBoxSalidas().setOnAction(event -> choiceBoxSalidasSelectionChange());
+        this.stage.getChoiceBoxBase().setOnAction(event -> choiceBoxBaseSelectionChange());
+    }
+
+    private void choiceBoxBaseSelectionChange() {
+        int base = this.stage.getChoiceBoxBase().getSelectionModel().getSelectedItem();
+        double total = ReservarSalidaControlador.getInstance().calcularTotal(base);
+        this.stage.getLabelPrecioTotal().setText(String.valueOf(total));
     }
 
     private void choiceBoxSalidasSelectionChange() {
         int salidaId = this.stage.getChoiceBoxSalidas().getSelectionModel().getSelectedItem().getId();
-        SalidaInfoDTO salidaInfoDTO = ReservarSalidaControlador.getInstance().getSalidaInfo(salidaId);
+        this.salidaInfoDTO = ReservarSalidaControlador.getInstance().getSalidaInfo(salidaId);
         this.stage.getLabelPrecios().setText(this.crearLabelPrecios(salidaInfoDTO));
         try {
             int cupos = ReservarSalidaControlador.getInstance().getCupos(salidaId);

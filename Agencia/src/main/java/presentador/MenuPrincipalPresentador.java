@@ -21,7 +21,7 @@ public class MenuPrincipalPresentador {
     }
     private void itemReservarSalida_Click() {
         System.out.println("Reservar salida");
-        new ReservarSalidaPresentador(250,200);
+        new ReservarSalidaPresentador(500,250);
     }
 
     private void itemCrearSalida_Click() {
