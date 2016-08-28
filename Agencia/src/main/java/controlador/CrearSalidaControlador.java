@@ -14,7 +14,6 @@ import org.tempuri.IBusService;
 import org.tempuri.IBusServiceObtenerCiudadesBusServiceFaultFaultFaultMessage;
 import org.tempuri.IBusServiceObtenerUnidadesBusServiceFaultFaultFaultMessage;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +22,9 @@ import java.util.List;
  *
  * Created by ASUS on 26/08/2016.
  */
-public class CrearSalidaControlador {
+public class CrearSalidaControlador extends GenericControlador{
 
-    public static final String CODIGO = "a41f7fdb-ed81-4025-909f-1e3607f27f6a";
+//    public static final String CODIGO = "a41f7fdb-ed81-4025-909f-1e3607f27f6a";
 
     private static final CrearSalidaControlador INSTANCE = new CrearSalidaControlador();
 

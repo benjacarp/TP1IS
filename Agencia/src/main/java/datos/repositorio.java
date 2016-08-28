@@ -32,20 +32,33 @@ public class Repositorio {
         cargarSalidas();
     }
 
+    /**
+     * Aca se hardcodean las salidas que ya he reservado, para no tener
+     * que crear una nueva cada vez y así no quedarme sin salidas disponibles
+     */
     private void cargarSalidas() {
-
         Unidad unidad = new Unidad();
+        unidad.setNumero(1);
+        unidad.setMarca("Ivecco");
+        unidad.setTipo("Cama");
+        unidad.setDominio("LAO 191");
+        unidad.setCantButacas(40);
+
         Ciudad tucuman = new Ciudad("San Miguel de Tucumán", "Tucumán", "Argentina");
         Hotel hotel = new Hotel(1, "Le Parc", tucuman, 3);
 
         Transporte transporte = new Transporte(new Date(2016,9,1), new Date(2016,9,8), unidad);
-        Alojamiento alojamiento = new Alojamiento(new Date(2016,9,1), new Date(2016,9,8), hotel);
+        transporte.setOrigen(new Ciudad("Capital", "Bs. As.", "Argentina"));
+        transporte.setDestino(tucuman);
+        Alojamiento alojamiento = new Alojamiento(new Date(2016,9,1), new Date(2016,9,7), hotel);
 
         Salida salida1 = new Salida(1, transporte, alojamiento);
         salida1.setEstado("En Venta");
         salida1.setNombre("Jardín de la república 2016");
         salida1.setCondiciones("Condiciones....");
         salida1.setDescripcion("Un viaje muy picante");
+
+        this.salidas.add(salida1);
 
         System.out.println(salida1);
     }
@@ -73,4 +86,7 @@ public class Repositorio {
         return hoteles;
     }
 
+    public List<Salida> getSalidas() {
+        return salidas;
+    }
 }

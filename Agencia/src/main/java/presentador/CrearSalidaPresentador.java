@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by ASUS on 25/08/2016.
  */
-public class CrearSalidaPresentador {
+public class CrearSalidaPresentador extends GenericPresentador{
 
     private CrearSalidaStage stage;
 
@@ -52,15 +52,6 @@ public class CrearSalidaPresentador {
 
         this.stage.getUnidadesListView().setItems(unidades);
         this.stage.getHotelChoiceBox().setItems(hoteles);
-    }
-
-    private void alertaMaker(Alert.AlertType error, String advertencia, String headerText, String contentText) {
-        Alert alert = new Alert(error);
-        alert.setTitle(advertencia);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-
-        alert.showAndWait();
     }
 
 }

@@ -91,4 +91,19 @@ public class Salida {
         return origen;
     }
 
+    @Override
+    public String toString() {
+        return "Salida{" +
+                "id=" + id +
+                ", estado='" + estado + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", condiciones='" + condiciones + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", dias=" + dias +
+                ", noches=" + noches +
+                ", origen=" + origen +
+                ", alojamiento=" + alojamiento +
+                ", transporte=" + transporte +
+                '}';
+    }
 }
