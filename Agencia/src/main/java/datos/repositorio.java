@@ -58,6 +58,12 @@ public class Repositorio {
         salida1.setCondiciones("Condiciones....");
         salida1.setDescripcion("Un viaje muy picante");
 
+        salida1.setBaseSimple(5000);
+        salida1.setBaseDoble(4000);
+        salida1.setBaseTriple(3500);
+        salida1.setBaseCuadruple(3000);
+        salida1.setBaseQuintuple(2800);
+
         this.salidas.add(salida1);
 
         System.out.println(salida1);
@@ -88,5 +94,15 @@ public class Repositorio {
 
     public List<Salida> getSalidas() {
         return salidas;
+    }
+
+    public Salida getSalidaPorId(int id) {
+
+        for (Salida salida : this.salidas) {
+            if (salida.getId() == id) {
+                return salida;
+            }
+        }
+        return null;
     }
 }

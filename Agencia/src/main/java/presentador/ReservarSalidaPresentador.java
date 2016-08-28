@@ -1,10 +1,10 @@
 package presentador;
 
 import controlador.ReservarSalidaControlador;
-import datos.Repositorio;
 import dto.SalidaDTO;
+import dto.SalidaInfoDTO;
 import javafx.scene.control.Alert;
-import model.Salida;
+import org.tempuri.IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage;
 import vista.ReservarSalidaStage;
 
 import java.util.List;
@@ -30,7 +30,34 @@ public class ReservarSalidaPresentador extends GenericPresentador{
     }
 
     private void setActions() {
+        this.stage.getChoiceBoxSalidas().setOnAction(event -> choiceBoxSalidasSelectionChange());
+    }
 
+    private void choiceBoxSalidasSelectionChange() {
+        int salidaId = this.stage.getChoiceBoxSalidas().getSelectionModel().getSelectedItem().getId();
+        SalidaInfoDTO salidaInfoDTO = ReservarSalidaControlador.getInstance().getSalidaInfo(salidaId);
+        this.stage.getLabelPrecios().setText(this.crearLabelPrecios(salidaInfoDTO));
+        try {
+            int cupos = ReservarSalidaControlador.getInstance().getCupos(salidaId);
+            this.stage.getLabelcupos().setText(String.valueOf(cupos));
+            if (cupos == 0) {
+                this.alertaMaker(Alert.AlertType.WARNING, "Ciudado", "No hay cupos disponibles, salida en pausa", "Esta salida no esta disponible a la venta en estos momentos.");
+            }
+        } catch (IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage e) {
+            e.printStackTrace();
+            this.alertaMaker(Alert.AlertType.ERROR, "Error", "Error de conexion", "No se pudo consultar los cupos disponibles.");
+        }
+    }
+
+    private String crearLabelPrecios(SalidaInfoDTO salidaInfoDTO) {
+        String string = "Base simple: ";
+        string = string + salidaInfoDTO.getBaseSimple();
+        string = string + ", doble: " + salidaInfoDTO.getBaseDoble();
+        string = string + ", triple: " + salidaInfoDTO.getBaseTriple();
+        string = string + ", cuadruple: " + salidaInfoDTO.getBaseCuadruple();
+        string = string + ", quintuple: " + salidaInfoDTO.getBaseQuintuple();
+
+        return string;
     }
 
 }
