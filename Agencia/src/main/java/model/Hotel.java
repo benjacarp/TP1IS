@@ -6,13 +6,15 @@ package model;
 public class Hotel {
 
     private String nombre;
-    private String ciudad;
+    private Ciudad ciudad;
     private int estrellas;
+    private int id;
 
     public Hotel() {
     }
 
-    public Hotel(String nombre, String ciudad, int estrellas) {
+    public Hotel(int id, String nombre, Ciudad ciudad, int estrellas) {
+        this.id = id;
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.estrellas = estrellas;
@@ -26,11 +28,11 @@ public class Hotel {
         this.nombre = nombre;
     }
 
-    public String getCiudad() {
+    public Ciudad getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
+    public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
 
@@ -40,5 +42,13 @@ public class Hotel {
 
     public void setEstrellas(int estrellas) {
         this.estrellas = estrellas;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
