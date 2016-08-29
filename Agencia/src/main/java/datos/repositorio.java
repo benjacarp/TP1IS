@@ -1,12 +1,6 @@
 package datos;
 
-import model.Alojamiento;
-import model.Ciudad;
-import model.Hotel;
-import model.Paquete;
-import model.Salida;
-import model.Transporte;
-import model.Unidad;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,10 +59,14 @@ public class Repositorio {
         salida1.setBaseCuadruple(3000);
         salida1.setBaseQuintuple(2800);
 
-        List<Integer> list = new ArrayList<>();
-        list.add(5);
-        list.add(6);
-        salida1.getPaquetes().add(new Paquete("Juan Pedro Sosa",list,2,8000));
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(5);
+        list1.add(6);
+        salida1.getPaquetes().add(new Paquete(new Cliente("Juan Sosa",34123456,4347009,"Juan@gmail.com"),list1,2,8000));
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(7);
+        list2.add(8);
+        salida1.getPaquetes().add(new Paquete(new Cliente("Ana Maria",34123456,4347009,"Ana@gmail.com"),list2,2,8000));
 
         this.salidas.add(salida1);
 
@@ -127,7 +125,7 @@ public class Repositorio {
         for (Salida salidaDB : this.salidas){
             id++;
         }
-        salida.setId(id);
+        salida.setId(++id);
         this.salidas.add(salida);
         System.out.println("Salida creada: ");
         System.out.println(salida);

@@ -24,7 +24,10 @@ public class ReservarSalidaStage extends Stage {
     private Label butacasElegidas;
     private Button buttonConfirmarReserva;
     private Button buttonActualizar;
-    private TextField campoCliente;
+    private TextField campoNombreCliente;
+    private TextField campoTelCliente;
+    private TextField campoMailCliente;
+    private TextField campoDNICliente;
 
     public ReservarSalidaStage(int largo, int ancho, List<SalidaDTO> salidas) {
         this.setTitle(WINDOWS_TITLE);
@@ -34,7 +37,7 @@ public class ReservarSalidaStage extends Stage {
 
     private void initComponents(List<SalidaDTO> salidas) {
 
-        this.campoCliente = new TextField();
+        this.campoNombreCliente = new TextField();
         this.choiceBoxSalidas = new ChoiceBox<SalidaDTO>();
         this.choiceBoxSalidas.getItems().addAll(salidas);
         this.buttonActualizar = new Button("Actualizar");
@@ -46,14 +49,24 @@ public class ReservarSalidaStage extends Stage {
         this.buttonElegirButacas = new Button("Elegir Butacas");
         this.butacasElegidas = new Label("");
         this.buttonConfirmarReserva = new Button("Confirmar Reserva");
+        this.campoTelCliente = new TextField();
+        this.campoMailCliente = new TextField();
+        this.campoDNICliente = new TextField();
     }
 
     private void buildStage(int largo, int ancho) {
 
         VBox pane = new VBox();
-        pane.getChildren().add(new Label("Elija la salida que desea reservar: "));
         pane.getChildren().add(new Label("Cliente: "));
-        pane.getChildren().add(this.campoCliente);
+        pane.getChildren().add(this.campoNombreCliente);
+        pane.getChildren().add(new Label("DNI: "));
+        pane.getChildren().add(this.campoDNICliente);
+        pane.getChildren().add(new Label("tel: "));
+        pane.getChildren().add(this.campoTelCliente);
+        pane.getChildren().add(new Label("mail: "));
+        pane.getChildren().add(this.campoMailCliente);
+        pane.getChildren().add(new Label(""));
+        pane.getChildren().add(new Label("Elija la salida que desea reservar: "));
         HBox hBox = new HBox();
         hBox.getChildren().addAll(this.choiceBoxSalidas, this.buttonActualizar);
         pane.getChildren().add(hBox);
@@ -117,7 +130,23 @@ public class ReservarSalidaStage extends Stage {
         this.buttonActualizar = buttonActualizar;
     }
 
-    public TextField getCampoCliente() {
-        return campoCliente;
+    public TextField getCampoNombreCliente() {
+        return campoNombreCliente;
+    }
+
+    public TextField getCampoTelCliente() {
+        return campoTelCliente;
+    }
+
+    public void setCampoTelCliente(TextField campoTelCliente) {
+        this.campoTelCliente = campoTelCliente;
+    }
+
+    public TextField getCampoMailCliente() {
+        return campoMailCliente;
+    }
+
+    public TextField getCampoDNICliente() {
+        return campoDNICliente;
     }
 }

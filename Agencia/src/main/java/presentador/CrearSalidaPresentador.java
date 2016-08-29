@@ -46,6 +46,11 @@ public class CrearSalidaPresentador extends GenericPresentador{
      */
     private void confirmarCreacionDeSalida() {
 
+        if (this.stage.getUnidadesListView().getSelectionModel().getSelectedItem() == null) {
+            //TODO agregar aca todos los campos que no pueden ser nulos (todos creo)
+            this.alertaMaker(Alert.AlertType.WARNING, "Advertencia", "Unidad no seleccionada", "Debe seleccionar una unidad para continuar");
+            return;
+        }
         SalidaDTO salidaDTO = new SalidaDTO();
 
         salidaDTO.setBaseSimple(Double.parseDouble(this.stage.getBaseSimple().getText()));

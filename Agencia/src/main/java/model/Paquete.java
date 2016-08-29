@@ -8,23 +8,23 @@ import java.util.List;
  */
 public class Paquete {
 
-    private String cliente;
+    private Cliente cliente;
     private List<Integer> butacas = new ArrayList<>();
     private int base;
     private double total;
 
-    public Paquete(String cliente, List<Integer> butacas, int base, double total) {
+    public Paquete(Cliente cliente, List<Integer> butacas, int base, double total) {
         this.cliente = cliente;
         this.butacas = butacas;
         this.base = base;
         this.total = total;
     }
 
-    public String getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(String cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 

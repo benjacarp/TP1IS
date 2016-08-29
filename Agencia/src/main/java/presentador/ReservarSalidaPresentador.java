@@ -1,6 +1,7 @@
 package presentador;
 
 import controlador.ReservarSalidaControlador;
+import dto.ClienteDTO;
 import dto.ReservaDTO;
 import dto.SalidaDTO;
 import dto.SalidaInfoDTO;
@@ -61,6 +62,7 @@ public class ReservarSalidaPresentador extends GenericPresentador{
             }
         } catch (IBusServiceObtenerButacasBusServiceFaultFaultFaultMessage e) {
             e.printStackTrace();
+            this.stage.getChoiceBoxSalidas().getSelectionModel().clearSelection();
             this.alertaMaker(Alert.AlertType.ERROR, "Error", "Error de conexion", "No se pudo consultar los cupos disponibles.");
         }
     }
@@ -90,7 +92,13 @@ public class ReservarSalidaPresentador extends GenericPresentador{
 
     private void buttonConfirmarReservaClick() {
         try {
-            ReservaDTO reservaDTO = ReservarSalidaControlador.getInstance().ReservarSalida(this.stage.getCampoCliente().getText(),this.butacas);
+            ClienteDTO clienteDTO = new ClienteDTO();
+            clienteDTO.setNombre(this.stage.getCampoNombreCliente().getText());
+            clienteDTO.setDni(Integer.parseInt(this.stage.getCampoDNICliente().getText()));
+            clienteDTO.setMail(this.stage.getCampoMailCliente().getText());
+            clienteDTO.setTelefono(Integer.parseInt(this.stage.getCampoTelCliente().getText()));
+
+            ReservaDTO reservaDTO = ReservarSalidaControlador.getInstance().ReservarSalida(clienteDTO,this.butacas);
             if (reservaDTO.isExito()) {
                 this.alertaMaker(Alert.AlertType.INFORMATION, "Reserva exitosa", "Se reservaron las butacas exitosamente", "El paquete se reservo exitosamente");
             } else {

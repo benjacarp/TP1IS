@@ -2,9 +2,11 @@ package controlador;
 
 import com.microsoft.schemas._2003._10.serialization.arrays.ArrayOfint;
 import datos.Repositorio;
+import dto.ClienteDTO;
 import dto.ReservaDTO;
 import dto.SalidaDTO;
 import dto.SalidaInfoDTO;
+import model.Cliente;
 import model.Paquete;
 import model.Salida;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfButacaSvc;
@@ -108,12 +110,6 @@ public class ReservarSalidaControlador extends GenericControlador {
         String butacasMessage = "";
         int unidad = this.salida.getTransporte().getUnidad().getNumero();
 
-        /*BusService client = new BusService();
-        IBusService stub = client.getSGEBusService();
-
-        ArrayOfButacaSvc array = stub.obtenerButacas(CODIGO, unidad);
-        List<ButacaSvc> butacas = array.getButacaSvc();*/
-
         for (ButacaSvc butacaSvc : this.butacas) {
             if (!butacaSvc.isOcupada()) {
                 if (butacaSvc.getNumero() < 10) {
@@ -127,7 +123,7 @@ public class ReservarSalidaControlador extends GenericControlador {
         return butacasMessage;
     }
 
-    public ReservaDTO ReservarSalida(String cliente, List<Integer> butacas) throws IBusServiceReservarButacasBusServiceFaultFaultFaultMessage {
+    public ReservaDTO ReservarSalida(ClienteDTO cliente, List<Integer> butacas) throws IBusServiceReservarButacasBusServiceFaultFaultFaultMessage {
         //armar el array con el formato de la API
         ArrayOfint arrayOfint = new ArrayOfint();
         for (int butaca : butacas) {
@@ -149,9 +145,10 @@ public class ReservarSalidaControlador extends GenericControlador {
         return reservaDTO;
     }
 
-    private void guardarPaquete(String cliente, List<Integer> butacas) {
+    private void guardarPaquete(ClienteDTO clienteDTO, List<Integer> butacas) {
 
-        Paquete p = new Paquete(cliente, butacas, this.base, this.precio);
+        Cliente clienteDB = new Cliente(clienteDTO.getNombre(), clienteDTO.getDni(), clienteDTO.getTelefono(), clienteDTO.getMail());
+        Paquete p = new Paquete(clienteDB, butacas, this.base, this.precio);
         this.salida.getPaquetes().add(p);
 
         System.out.println(p);
