@@ -7,8 +7,8 @@ import java.util.Date;
  */
 public class Transporte extends Servicio {
 
-    private Ciudad origen;
-    private Ciudad destino;
+    private String origen;
+    private String destino;
     private Unidad unidad;
 
     public Transporte(Date inicio, Date fin, Unidad unidad) {
@@ -20,23 +20,32 @@ public class Transporte extends Servicio {
         return unidad;
     }
 
-    public Ciudad getOrigen() {
+    public String getOrigen() {
         return origen;
     }
 
-    public void setOrigen(Ciudad origen) {
+    public void setOrigen(String origen) {
         this.origen = origen;
     }
 
-    public Ciudad getDestino() {
+    public String getDestino() {
         return destino;
     }
 
-    public void setDestino(Ciudad destino) {
+    public void setDestino(String destino) {
         this.destino = destino;
     }
 
     public void setUnidad(Unidad unidad) {
         this.unidad = unidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Transporte{" +
+                "origen='" + origen + '\'' +
+                ", destino='" + destino + '\'' +
+                ", unidad=" + unidad +
+                '}';
     }
 }

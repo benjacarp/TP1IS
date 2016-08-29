@@ -3,8 +3,9 @@ package controlador;
 import datos.Repositorio;
 import dto.CiudadDTO;
 import dto.HotelDTO;
+import dto.SalidaDTO;
 import dto.UnidadDTO;
-import model.Hotel;
+import model.*;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfCiudadSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfUnidadSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.CiudadSvc;
@@ -109,9 +110,41 @@ public class CrearSalidaControlador extends GenericControlador{
         // transformar los hoteles al dto para pasarselo a la UI
         List<HotelDTO> hotelDTOList = new ArrayList<>();
         for (Hotel hotel : hoteles) {
-            hotelDTOList.add(new HotelDTO(hotel.getEstrellas(), hotel.getNombre()));
+            hotelDTOList.add(new HotelDTO(hotel.getId(), hotel.getNombre(), hotel.getEstrellas()));
         }
 
         return hotelDTOList;
+    }
+
+    public void guardarSalida(SalidaDTO salidaDTO) {
+        Unidad unidad = new Unidad();
+        UnidadDTO unidadDTO = salidaDTO.getTransporte().getUnidad();
+
+        unidad.setNumero(unidadDTO.getNumero());
+        unidad.setDominio(unidadDTO.getDominio());
+        unidad.setMarca(unidadDTO.getMarca());
+        unidad.setTipo(unidadDTO.getTipo());
+        unidad.setCantButacas(unidadDTO.getCantidadButacas());
+
+        Transporte transporte = new Transporte(salidaDTO.getTransporte().getInicio(), salidaDTO.getTransporte().getFin(), unidad);
+        transporte.setOrigen(salidaDTO.getTransporte().getOrigen());
+        transporte.setDestino(salidaDTO.getTransporte().getDestino());
+        Hotel hotel = Repositorio.getInstance().getHotelPorId(salidaDTO.getAlojamiento().getHotel().getId());
+        Alojamiento alojamiento = new Alojamiento(salidaDTO.getAlojamiento().getInicio(), salidaDTO.getAlojamiento().getFin(),hotel);
+        Salida salida = new Salida(transporte, alojamiento);
+
+        salida.setNombre(salidaDTO.getNombre());
+        salida.setCondiciones(salidaDTO.getCondiciones());
+        salida.setDescripcion(salidaDTO.getDescripcion());
+
+        salida.setBaseSimple(salidaDTO.getBaseSimple());
+        salida.setBaseDoble(salidaDTO.getBaseDoble());
+        salida.setBaseTriple(salidaDTO.getBaseTriple());
+        salida.setBaseCuadruple(salidaDTO.getBaseCuadruple());
+        salida.setBaseQuintuple(salidaDTO.getBaseQuintuple());
+
+        salida.setEstado("En Venta");
+
+        Repositorio.getInstance().guardarSalida(salida);
     }
 }

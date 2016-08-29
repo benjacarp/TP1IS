@@ -20,7 +20,7 @@ public class Salida {
     private String descripcion;
     private int dias;
     private int noches;
-    private Ciudad origen;
+    private String origen;
 
     // precios de las bases
     private double baseSimple;
@@ -32,8 +32,7 @@ public class Salida {
     private Alojamiento alojamiento;
     private Transporte transporte;
 
-    public Salida(int id,Transporte transporte, Alojamiento alojamiento) {
-        this.id = id;
+    public Salida(Transporte transporte, Alojamiento alojamiento) {
         this.transporte = transporte;
         this.alojamiento = alojamiento;
         this.dias = calcularDias();
@@ -97,7 +96,7 @@ public class Salida {
         return noches;
     }
 
-    public Ciudad getOrigen() {
+    public String getOrigen() {
         return origen;
     }
 
@@ -151,6 +150,10 @@ public class Salida {
 
     public List<Paquete> getPaquetes() {
         return paquetes;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

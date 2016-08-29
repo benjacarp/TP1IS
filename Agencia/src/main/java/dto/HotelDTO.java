@@ -5,15 +5,17 @@ package dto;
  */
 public class HotelDTO {
 
+    private int id;
     private String nombre;
     private int estrellas;
 
     public HotelDTO() {
     }
 
-    public HotelDTO(int estrellas, String nombre) {
-        this.estrellas = estrellas;
+    public HotelDTO(int id, String nombre, int estrellas) {
+        this.id = id;
         this.nombre = nombre;
+        this.estrellas = estrellas;
     }
 
     public int getEstrellas() {
@@ -30,6 +32,14 @@ public class HotelDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

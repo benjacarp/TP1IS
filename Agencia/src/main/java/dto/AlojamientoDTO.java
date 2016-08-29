@@ -1,18 +1,20 @@
-package model;
+package dto;
 
 import java.util.Date;
 
 /**
- * Created by ASUS on 27/08/2016.
+ * Created by ASUS on 28/08/2016.
  */
-public abstract class Servicio {
+public class AlojamientoDTO {
 
     private Date inicio;
     private Date fin;
+    private HotelDTO hotel;
 
-    public Servicio(Date inicio, Date fin) {
+    public AlojamientoDTO(Date inicio, Date fin, HotelDTO hotel) {
         this.inicio = inicio;
         this.fin = fin;
+        this.hotel = hotel;
     }
 
     public Date getInicio() {
@@ -31,11 +33,11 @@ public abstract class Servicio {
         this.fin = fin;
     }
 
-    @Override
-    public String toString() {
-        return "Servicio{" +
-                "inicio=" + inicio +
-                ", fin=" + fin +
-                '}';
+    public HotelDTO getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(HotelDTO hotel) {
+        this.hotel = hotel;
     }
 }

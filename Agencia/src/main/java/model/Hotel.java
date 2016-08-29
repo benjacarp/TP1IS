@@ -6,14 +6,14 @@ package model;
 public class Hotel {
 
     private String nombre;
-    private Ciudad ciudad;
+    private String ciudad;
     private int estrellas;
     private int id;
 
     public Hotel() {
     }
 
-    public Hotel(int id, String nombre, Ciudad ciudad, int estrellas) {
+    public Hotel(int id, String nombre, String ciudad, int estrellas) {
         this.id = id;
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -28,11 +28,11 @@ public class Hotel {
         this.nombre = nombre;
     }
 
-    public Ciudad getCiudad() {
+    public String getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(Ciudad ciudad) {
+    public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
 
@@ -50,5 +50,15 @@ public class Hotel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "nombre='" + nombre + '\'' +
+                ", ciudad='" + ciudad + '\'' +
+                ", estrellas=" + estrellas +
+                ", id=" + id +
+                '}';
     }
 }

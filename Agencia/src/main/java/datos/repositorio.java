@@ -1,6 +1,12 @@
 package datos;
 
-import model.*;
+import model.Alojamiento;
+import model.Ciudad;
+import model.Hotel;
+import model.Paquete;
+import model.Salida;
+import model.Transporte;
+import model.Unidad;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,15 +45,15 @@ public class Repositorio {
         unidad.setDominio("LAO 191");
         unidad.setCantButacas(40);
 
-        Ciudad tucuman = new Ciudad("San Miguel de Tucumán", "Tucumán", "Argentina");
-        Hotel hotel = new Hotel(1, "Le Parc", tucuman, 3);
+        Hotel hotel = new Hotel(1, "Le Parc", "San Miguel de Tucumán", 3);
 
         Transporte transporte = new Transporte(new Date(2016,9,1), new Date(2016,9,8), unidad);
-        transporte.setOrigen(new Ciudad("Capital", "Bs. As.", "Argentina"));
-        transporte.setDestino(tucuman);
+        transporte.setOrigen("Capital");
+        transporte.setDestino("San Miguel de Tucumán");
         Alojamiento alojamiento = new Alojamiento(new Date(2016,9,1), new Date(2016,9,7), hotel);
 
-        Salida salida1 = new Salida(1, transporte, alojamiento);
+        Salida salida1 = new Salida(transporte, alojamiento);
+        salida1.setId(1);
         salida1.setEstado("En Venta");
         salida1.setNombre("Jardín de la república 2016");
         salida1.setCondiciones("Condiciones....");
@@ -70,22 +76,32 @@ public class Repositorio {
     }
 
     private void cargarHoteles() {
-        Ciudad tucuman = new Ciudad("San Miguel de Tucumán", "Tucumán", "Argentina");
-        hoteles.add(new Hotel(1, "Le Parc"          , tucuman, 3));
-        hoteles.add(new Hotel(2, "Hilton"           , tucuman, 5));
-        hoteles.add(new Hotel(3, "Howard Johnson"   , tucuman, 4));
+        hoteles.add(new Hotel(1, "Le Parc"          , "San Miguel de Tucumán", 3));
+        hoteles.add(new Hotel(2, "Hilton"           , "San Miguel de Tucumán", 5));
+        hoteles.add(new Hotel(3, "Howard Johnson"   , "San Miguel de Tucumán", 4));
 
-        Ciudad salta = new Ciudad("Salta", "Salta", "Argentina");
-        hoteles.add(new Hotel(4, "Le Parc"          , tucuman, 3));
-        hoteles.add(new Hotel(5, "Hilton"           , tucuman, 5));
-        hoteles.add(new Hotel(6, "Howard Johnson"   , tucuman, 4));
+        hoteles.add(new Hotel(4, "Almería"          , "Salta", 3));
+        hoteles.add(new Hotel(5, "Ankara Suites"    , "Salta", 5));
+        hoteles.add(new Hotel(6, "Wilson Hotel"     , "Salta", 4));
+
+        hoteles.add(new Hotel(7, "Apart Urbanus"            , "San Fernando del Valle de Catamarca", 3));
+        hoteles.add(new Hotel(8, "Hotel Arenales"           , "San Fernando del Valle de Catamarca", 5));
+        hoteles.add(new Hotel(9, "Grand Hotel"              , "San Fernando del Valle de Catamarca", 4));
+
+        hoteles.add(new Hotel(10, "Hotel Altos del Estero"  , "Santiago del Estero", 3));
+        hoteles.add(new Hotel(11, "Hotel Carlos V"          , "Santiago del Estero", 5));
+        hoteles.add(new Hotel(12, "Hotel Savoy"             , "Santiago del Estero", 4));
+
+        hoteles.add(new Hotel(13, "Posada El Arribo"    , "San Salvador de Jujuy", 3));
+        hoteles.add(new Hotel(14, "Fenicia"             , "San Salvador de Jujuy", 5));
+        hoteles.add(new Hotel(15, "Hotel Augustus"      , "San Salvador de Jujuy", 4));
     }
 
-    public List<Hotel> buscarHotelesPorCiudad(String codigoDeCiudad) {
+    public List<Hotel> buscarHotelesPorCiudad(String nombreDeCiudad) {
 
         List<Hotel> hoteles = new ArrayList<>();
         for (Hotel hotel : this.hoteles) {
-            if (hotel.getCiudad().equals(codigoDeCiudad)) {
+            if (hotel.getCiudad().equals(nombreDeCiudad)) {
                 hoteles.add(hotel);
             }
         }
@@ -101,6 +117,26 @@ public class Repositorio {
         for (Salida salida : this.salidas) {
             if (salida.getId() == id) {
                 return salida;
+            }
+        }
+        return null;
+    }
+
+    public void guardarSalida(Salida salida) {
+        int id = 0;
+        for (Salida salidaDB : this.salidas){
+            id++;
+        }
+        salida.setId(id);
+        this.salidas.add(salida);
+        System.out.println("Salida creada: ");
+        System.out.println(salida);
+    }
+
+    public Hotel getHotelPorId(int id) {
+        for (Hotel hotel : this.hoteles) {
+            if (id == hotel.getId()) {
+                return hotel;
             }
         }
         return null;

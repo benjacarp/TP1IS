@@ -55,4 +55,15 @@ public class Unidad {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return "Unidad{" +
+                "numero=" + numero +
+                ", cantButacas=" + cantButacas +
+                ", dominio='" + dominio + '\'' +
+                ", marca='" + marca + '\'' +
+                ", tipo='" + tipo + '\'' +
+                '}';
+    }
 }

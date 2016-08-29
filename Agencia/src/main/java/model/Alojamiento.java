@@ -17,4 +17,11 @@ public class Alojamiento extends Servicio {
     public Hotel getHotel() {
         return hotel;
     }
+
+    @Override
+    public String toString() {
+        return "Alojamiento{" +
+                "hotel=" + hotel +
+                '}';
+    }
 }

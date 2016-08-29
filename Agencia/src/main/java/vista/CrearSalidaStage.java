@@ -3,14 +3,10 @@ package vista;
 import dto.CiudadDTO;
 import dto.HotelDTO;
 import dto.UnidadDTO;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -34,8 +30,13 @@ public class CrearSalidaStage extends Stage {
     private TextField campoNombre;
     private TextArea areaCondiciones;
     private Button confirmarButton;
-    private DatePicker fechaInicio;
-    private DatePicker fechaFin;
+    private DatePicker fechaSalida;
+    private DatePicker fechaRegreso;
+    private TextArea areaItinerario;
+    private DatePicker fechaIngresoHotel;
+    private DatePicker fechaEgresoHotel;
+    private TextField campoDescripcion;
+    private TextField campoLugarDeSalida;
 
     public CrearSalidaStage(int largo, int ancho, List<CiudadDTO> ciudades) {
         this.setTitle(WINDOWS_TITLE);
@@ -45,8 +46,12 @@ public class CrearSalidaStage extends Stage {
 
     private void initComponents(List<CiudadDTO> ciudades) {
 
-        this.fechaInicio = new DatePicker();
-        this.fechaFin = new DatePicker();
+        this.fechaSalida = new DatePicker();
+        this.fechaRegreso = new DatePicker();
+        this.fechaIngresoHotel = new DatePicker();
+        this.fechaEgresoHotel = new DatePicker();
+
+        this.campoLugarDeSalida = new TextField();
 
         this.ciudadChoiceBox = new ChoiceBox<>();
         this.hotelChoiceBox = new ChoiceBox<>();
@@ -61,6 +66,8 @@ public class CrearSalidaStage extends Stage {
 
         this.campoNombre = new TextField();
         this.areaCondiciones = new TextArea();
+        this.areaItinerario = new TextArea();
+        this.campoDescripcion = new TextField();
 
         this.confirmarButton = new Button("Crear Salida");
 
@@ -68,22 +75,27 @@ public class CrearSalidaStage extends Stage {
 
     private void buildStage(int largo, int ancho) {
         VBox pane = new VBox();
+        pane.getChildren().add(new Label("Datos del paquete: "));
+        pane.getChildren().add(createHBox(new Label("Nombre del paquete: "), this.campoNombre));
+        pane.getChildren().add(createHBox(new Label("Descripción del paquete: "), this.campoDescripcion));
+        pane.getChildren().add(createHBox(new Label("Condiciones: "), this.areaCondiciones));
+        pane.getChildren().add(createHBox(new Label("Itinerario: "), this.areaItinerario));
         pane.getChildren().add(new Label("Fechas"));
-        pane.getChildren().add(createHBox(new Label("inicio: "), this.fechaInicio));
-        pane.getChildren().add(createHBox(new Label("fin:     "), this.fechaFin));
+        pane.getChildren().add(createHBox(new Label("Salida:  "), this.fechaSalida));
+        pane.getChildren().add(createHBox(new Label("Lugar:  "), this.campoLugarDeSalida));
+        pane.getChildren().add(createHBox(new Label("Regreso: "), this.fechaRegreso));
         pane.getChildren().add(new Label("Destinos"));
         pane.getChildren().add(this.ciudadChoiceBox);
         pane.getChildren().add(new Label("Unidades"));
         pane.getChildren().add(this.unidadesListView);
         pane.getChildren().add(new Label("Hoteles"));
         pane.getChildren().add(this.hotelChoiceBox);
+        pane.getChildren().add(createHBox(new Label("Ingreso al hotel: "), this.fechaIngresoHotel));
+        pane.getChildren().add(createHBox(new Label("Egreso del hotel: "), this.fechaEgresoHotel));
         pane.getChildren().add(new Label(""));
         pane.getChildren().add(new Label("Precios de las bases"));
         pane.getChildren().add(bases());
         pane.getChildren().add(new Label(""));
-        pane.getChildren().add(new Label("Datos del paquete: "));
-        pane.getChildren().add(createHBox(new Label("Nombre del paquete: "), this.campoNombre));
-        pane.getChildren().add(createHBox(new Label("Condiciones: "), this.areaCondiciones));
         pane.getChildren().add(new Label(""));
         pane.getChildren().add(this.confirmarButton);
 
@@ -126,5 +138,65 @@ public class CrearSalidaStage extends Stage {
 
     public ChoiceBox<HotelDTO> getHotelChoiceBox() {
         return hotelChoiceBox;
+    }
+
+    public Button getConfirmarButton() {
+        return confirmarButton;
+    }
+
+    public TextField getBaseSimple() {
+        return baseSimple;
+    }
+
+    public TextField getBaseDoble() {
+        return baseDoble;
+    }
+
+    public TextField getBaseTriple() {
+        return baseTriple;
+    }
+
+    public TextField getBaseCuad() {
+        return baseCuad;
+    }
+
+    public TextField getBaseQuin() {
+        return baseQuin;
+    }
+
+    public TextField getCampoNombre() {
+        return campoNombre;
+    }
+
+    public TextArea getAreaCondiciones() {
+        return areaCondiciones;
+    }
+
+    public DatePicker getFechaSalida() {
+        return fechaSalida;
+    }
+
+    public DatePicker getFechaRegreso() {
+        return fechaRegreso;
+    }
+
+    public TextArea getAreaItinerario() {
+        return areaItinerario;
+    }
+
+    public DatePicker getFechaIngresoHotel() {
+        return fechaIngresoHotel;
+    }
+
+    public DatePicker getFechaEgresoHotel() {
+        return fechaEgresoHotel;
+    }
+
+    public TextField getCampoDescripcion() {
+        return campoDescripcion;
+    }
+
+    public TextField getCampoLugarDeSalida() {
+        return campoLugarDeSalida;
     }
 }
