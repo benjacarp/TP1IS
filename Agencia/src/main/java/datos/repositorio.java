@@ -59,6 +59,12 @@ public class Repositorio {
         salida1.setBaseCuadruple(3000);
         salida1.setBaseQuintuple(2800);
 
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        salida1.getPaquetes().add(new Paquete(new Cliente("Benja Salas",34953806,6225766,"Benja@gmail.com"),list,4,12000));
         List<Integer> list1 = new ArrayList<>();
         list1.add(5);
         list1.add(6);
@@ -69,6 +75,43 @@ public class Repositorio {
         salida1.getPaquetes().add(new Paquete(new Cliente("Ana Maria",34123456,4347009,"Ana@gmail.com"),list2,2,8000));
 
         this.salidas.add(salida1);
+
+        //2da salida
+        unidad = new Unidad();
+        unidad.setNumero(72);
+        unidad.setMarca("Scania");
+        unidad.setTipo("Semicama");
+        unidad.setDominio("AAA072");
+        unidad.setCantButacas(44);
+
+        hotel = new Hotel(1, "Wilson Hotel", "Salta", 4);
+
+        transporte = new Transporte(new Date(2016,9,21), new Date(2016,9,23), unidad);
+        transporte.setOrigen("Capital");
+        transporte.setDestino("Salta");
+        alojamiento = new Alojamiento(new Date(2016,9,22), new Date(2016,9,23), hotel);
+
+        Salida salida2 = new Salida(transporte, alojamiento);
+        salida2.setId(2);
+        salida2.setEstado("En Venta");
+        salida2.setNombre("Salta - final copa argentina 2016");
+        salida2.setCondiciones("Condiciones....");
+        salida2.setDescripcion("Final river boca");
+
+        salida2.setBaseSimple(5000);
+        salida2.setBaseDoble(4500);
+        salida2.setBaseTriple(4200);
+        salida2.setBaseCuadruple(4000);
+        salida2.setBaseQuintuple(3900);
+
+        list = new ArrayList<>();
+        list.add(41);
+        list.add(42);
+        list.add(43);
+        list.add(44);
+        salida1.getPaquetes().add(new Paquete(new Cliente("Juan Franco",34953806,6225766,"juan_franco@gmail.com"),list,4,16000));
+
+        this.salidas.add(salida2);
 
         System.out.println(salida1);
     }

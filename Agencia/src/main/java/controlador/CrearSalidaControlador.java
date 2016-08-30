@@ -6,14 +6,18 @@ import dto.HotelDTO;
 import dto.SalidaDTO;
 import dto.UnidadDTO;
 import model.*;
+import org.datacontract.schemas._2004._07.sge_service_contracts.*;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfCiudadSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.ArrayOfUnidadSvc;
 import org.datacontract.schemas._2004._07.sge_service_contracts.CiudadSvc;
+import org.datacontract.schemas._2004._07.sge_service_contracts.Resultado;
 import org.datacontract.schemas._2004._07.sge_service_contracts.UnidadSvc;
+import org.tempuri.*;
 import org.tempuri.BusService;
 import org.tempuri.IBusService;
 import org.tempuri.IBusServiceObtenerCiudadesBusServiceFaultFaultFaultMessage;
 import org.tempuri.IBusServiceObtenerUnidadesBusServiceFaultFaultFaultMessage;
+import org.tempuri.IBusServiceVincularUnidadBusServiceFaultFaultFaultMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +149,26 @@ public class CrearSalidaControlador extends GenericControlador{
 
         salida.setEstado("En Venta");
 
-        Repositorio.getInstance().guardarSalida(salida);
+        System.out.println("Vincular unidad " + unidad);
+
+        BusService client = new BusService();
+        IBusService stub = client.getSGEBusService();
+
+        try {
+            Resultado resultado = stub.vincularUnidad(CODIGO, unidad.getNumero());
+            if (resultado.isCorrecto()) {
+                System.out.println("Unidad " + unidad + " vinculada a la salida");
+                Repositorio.getInstance().guardarSalida(salida);
+            } else {
+                System.out.println("Unidad " + unidad + " vinculada a la salida");
+                String error = resultado.getError().getValue();
+                System.out.println("error: " + error);
+            }
+
+        } catch (IBusServiceVincularUnidadBusServiceFaultFaultFaultMessage e) {
+            e.printStackTrace();
+            System.out.println("Se produjo un error al tratar de vincular la unidad");
+        }
+
     }
 }
